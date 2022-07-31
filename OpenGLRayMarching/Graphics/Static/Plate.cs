@@ -27,10 +27,12 @@ namespace OpenGLRayMarching.Graphics.Static
         /// <inheritdoc />
         public override VBO<Vector3> Vertex { get; protected set; } = new VBO<Vector3>
         {
-            new Vector3(-.5f, -.5f, 0),
-            new Vector3(-.5f, .5f, 0),
-            new Vector3(.5f, .5f, 0),
-            new Vector3(.5f, -.5f, 0),
+            new Vector3(-1f, -1f, 0),
+            new Vector3(-1f, 1f, 0),
+            new Vector3(1f, 1f, 0),
+            new Vector3(1f, 1f, 0),
+            new Vector3(1f, -1f, 0),
+            new Vector3(-1f, -1f, 0),
         };
 
         /// <inheritdoc />
@@ -39,11 +41,13 @@ namespace OpenGLRayMarching.Graphics.Static
             new Vector2(0, 1),
             new Vector2(0, 0),
             new Vector2(1, 0),
+            new Vector2(1, 0),
             new Vector2(1, 1),
+            new Vector2(0, 1),
         };
 
         /// <inheritdoc />
-        public override PrimitiveType PrimitiveType { get; protected set; } = PrimitiveType.Quads;
+        public override PrimitiveType PrimitiveType { get; protected set; } = PrimitiveType.Triangles;
 
         /// <inheritdoc />
         public override BoundingBox BoundingBox { get; } =
