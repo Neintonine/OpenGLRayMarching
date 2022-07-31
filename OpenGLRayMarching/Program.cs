@@ -16,8 +16,18 @@ namespace OpenGLRayMarching
                 Title = "Raymarching",
                 Flags = ContextFlags.Default
             };
+
+            GameWindowSettings settings = new GameWindowSettings()
+            {
+                RenderFrequency = 100
+            };
             
-            using (Window window = new Window(GameWindowSettings.Default, windowSettings)) window.Run();
+            using (Window window = new Window(settings, windowSettings))
+            {
+                window.VSync = VSyncMode.Off;
+                
+                window.Run();
+            }
         }
     }
 }
