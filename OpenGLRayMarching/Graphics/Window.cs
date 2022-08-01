@@ -15,10 +15,12 @@ public class Window : GameWindow
 {
 
     private const string BASE_TITLE = "Raymarching";
-    private Shader basicShader;
+    private Shader _basicShader;
+    private Scene.Scene _scene;
+
     public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
     {
-        
+        _scene = new Scene.Scene();
     }
 
     protected override void OnLoad()
@@ -35,16 +37,16 @@ public class Window : GameWindow
             
         };
         
-        GL.ClearColor(0,1,0,1);
-        basicShader = new Shader(AssemblyUtility.ReadAssemblyFile("OpenGLRayMarching.Graphics.Shaders.basic.vert"), AssemblyUtility.ReadAssemblyFile("OpenGLRayMarching.Graphics.Shaders.basic.frag"));
+        GL.ClearColor(0.2f,0.3f,0.2f,1);
+        _basicShader = new Shader(AssemblyUtility.ReadAssemblyFile("OpenGLRayMarching.Graphics.Shaders.basic.vert"), AssemblyUtility.ReadAssemblyFile("OpenGLRayMarching.Graphics.Shaders.basic.frag"));
         
         base.OnLoad();
     }
 
     protected override void OnUpdateFrame(FrameEventArgs args)
     {
+        _scene.Update((float)args.Time, KeyboardState);
         base.OnUpdateFrame(args);
-        
     }
 
     protected override void OnRenderFrame(FrameEventArgs args)
@@ -52,12 +54,11 @@ public class Window : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
         string FPS = (1 / args.Time).ToString("F");
+        string frameTime = (args.Time * 1000).ToString("F2");
         //Console.WriteLine($"Rendering: {args.Time} - {FPS}");
-        Title = $"{BASE_TITLE} - {FPS}";
+        Title = $"{BASE_TITLE} - {FPS} FPS - {frameTime}ms";
         
-        basicShader.Activate();
-        Plate.Object.Activate();
-        GenericShader.DrawObject(Plate.Object);
+        _basicShader.Render(_scene);
         
         Context.SwapBuffers();
         base.OnRenderFrame(args);
@@ -67,5 +68,6 @@ public class Window : GameWindow
     {
         base.OnResize(e);
         GL.Viewport(0,0, Size.X, Size.Y);
+        _scene.Camera.AspectRatio = Size.X / (float)Size.Y;
     }
 }
