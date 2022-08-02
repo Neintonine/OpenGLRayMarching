@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using OpenGLRayMarching.Utils;
 using OpenTK.Mathematics;
 using Quaternion = OpenTK.Mathematics.Quaternion;
 using Vector3 = OpenTK.Mathematics.Vector3;
@@ -75,7 +76,7 @@ public class Camera
     private Quaternion _rotation = Quaternion.Identity;
     private Vector3 _eulerRotation;
 
-    private float _fov = 90;
+    private float _fov = 70;
     private float _nearPlane = .001f;
     private float _farPlane = 100;
 
@@ -110,8 +111,9 @@ public class Camera
 
     public void SetRotation(Vector3 euler)
     {
-        _rotation = Quaternion.FromEulerAngles(new Vector3(MathHelper.DegreesToRadians(euler.X), MathHelper.DegreesToRadians(euler.Y), MathHelper.DegreesToRadians(euler.Z)));
+        _rotation = MathFuncs.EulerQuaternion(euler);
         _eulerRotation = euler;
+        
         _updateViewModel = true;
     }
 
@@ -135,7 +137,7 @@ public class Camera
             Vector3 forward = GetForward();
             
             _view = Matrix4.LookAt(_position, _position + forward, Vector3.UnitY);
-            _model = Matrix4.CreateScale(2) * Matrix4.CreateFromQuaternion() * Matrix4.CreateTranslation( 1 * forward + _position) ;
+            _model = Matrix4.CreateScale(5) * Matrix4.CreateFromQuaternion(_rotation) * Matrix4.CreateTranslation( 1 * forward + _position);
             updateMVP = true;
             _updateViewModel = false;
         }
