@@ -5,21 +5,35 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="OpenTK" Version="4.7.4" />
+      <PackageReference Include="SkiaSharp" Version="2.88.0" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Graphics\Shaders\basic.frag" />
-      <EmbeddedResource Include="Graphics\Shaders\basic.frag" />
       <None Remove="Graphics\Shaders\basic.vert" />
-      <EmbeddedResource Include="Graphics\Shaders\basic.vert" />
+      <None Update="_Resources\spruit_sunrise_4k.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Remove="_Resources\spruit_sunrise_4k.exr" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Graphics\OpenGLBindings\GL" />
+      <Folder Include="Graphics\Shaders\Extensions" />
+      <Folder Include="_Resources" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Graphics\Shaders\Files\raymarching.frag" />
+      <EmbeddedResource Include="Graphics\Shaders\Files\raymarching.frag" />
+      <None Remove="Graphics\Shaders\Files\raymarching.vert" />
+      <EmbeddedResource Include="Graphics\Shaders\Files\raymarching.vert" />
+      <None Remove="Graphics\Shaders\Extensions\enviromentTexture.glsl" />
     </ItemGroup>
 
 </Project>

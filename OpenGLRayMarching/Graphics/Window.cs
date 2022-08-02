@@ -15,7 +15,7 @@ public class Window : GameWindow
 {
 
     private const string BASE_TITLE = "Raymarching";
-    private Shader _basicShader;
+    private Shader _raymarching;
     private Scene.Scene _scene;
 
     public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
@@ -38,7 +38,9 @@ public class Window : GameWindow
         };
         
         GL.ClearColor(0.2f,0.3f,0.2f,1);
-        _basicShader = new Shader(AssemblyUtility.ReadAssemblyFile("OpenGLRayMarching.Graphics.Shaders.basic.vert"), AssemblyUtility.ReadAssemblyFile("OpenGLRayMarching.Graphics.Shaders.basic.frag"));
+        _raymarching = new RaymarchingShader();
+        
+        _scene.Init();
         
         base.OnLoad();
     }
@@ -58,7 +60,7 @@ public class Window : GameWindow
         //Console.WriteLine($"Rendering: {args.Time} - {FPS}");
         Title = $"{BASE_TITLE} - {FPS} FPS - {frameTime}ms";
         
-        _basicShader.Render(_scene);
+        _raymarching.Render(_scene);
         
         Context.SwapBuffers();
         base.OnRenderFrame(args);

@@ -54,5 +54,15 @@ namespace OpenGLRayMarching.Utils
         {
             return GetAssemblyStream(Assembly.GetCallingAssembly(), path);
         }
+
+        public static string[] GetAllFilesInPath(Assembly ass, string path)
+        {
+            string[] resourceNames = ass.GetManifestResourceNames();
+            return resourceNames.Where(a => a.StartsWith(path)).ToArray();
+        }
+        public static string[] GetAllFilesInPath(string path)
+        {
+            return GetAllFilesInPath(Assembly.GetCallingAssembly(), path);
+        }
     }
 }
