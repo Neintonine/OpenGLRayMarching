@@ -37,6 +37,8 @@ public class Window : GameWindow
             
         };
         
+        Console.WriteLine($"GLSL max uniform locations: {GL.GetInteger(GetPName.MaxSubroutineUniformLocations)}");
+        
         GL.ClearColor(0.2f,0.3f,0.2f,1);
         _raymarching = new RaymarchingShader();
         
@@ -47,7 +49,7 @@ public class Window : GameWindow
 
     protected override void OnUpdateFrame(FrameEventArgs args)
     {
-        _scene.Update((float)args.Time, KeyboardState);
+        _scene.Update((float)args.Time, KeyboardState, MouseState);
         base.OnUpdateFrame(args);
     }
 
